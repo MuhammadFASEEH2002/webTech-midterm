@@ -68,7 +68,7 @@
     <title>Document</title>
 </head>
 
-<body hx-get="/cart" hx-trigger="load" hx-target="#order"  >
+<body  >
     <div class="col" style="width: 65%; ">
         <div>
 
@@ -84,9 +84,6 @@
 
         <div class="items"
             style="display: flex; flex-wrap: wrap; font-family: 'Segoe UI'; overflow-y: auto; height: 93vh; align-content: flex-start;">
-            
-         
-
         </div>
     </div>
     <div class="col" style="width: 34%;">

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="htmx-config" content="{&quot;useTemplateFragments&quot;:&quot;true&quot;}">
+    <style>
+        div.items>div {
+            display: inline-block;
+            margin: 6px 6px;
+            width: 194px;
+            height: 254px;
+            text-align: center;
+            /* cursor: pointer; */
+            border-radius: 9px;
+            background-color: white;
+            box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 2px 4px 1px;
+        }
+
+        .item-title {
+            position: relative;
+            /* top: 8px; */
+            margin-top: 10px;
+            width: 160px;
+            height: 63px;
+            padding: 5px;
+            overflow: hidden;
+            text-align: center;
+            font-family: 'Segoe UI';
+            font-size: 15px;
+            color: #2267fc;
+            text-transform: capitalize;
+            padding: 0 17px;
+            /* background-color: greenyellow; */
+        }
+
+        body {
+            background-color: #f0f0f0
+        }
+
+        .col {
+            display: inline-block;
+            /* border: 1px solid green; */
+            vertical-align: top;
+        }
+
+        #search {
+            margin: auto;
+            display: block;
+            padding: 7px;
+            font-size: 14pt;
+            border-radius: 10px;
+            outline: none;
+            border-color: #d3d3d3;
+            width: 70%;
+            text-align: center;
+        }
+
+        table,
+        th,
+        tr,
+        td {
+            border-collapse: collapse;
+            border: 1px solid #808080
+        }
+    </style>
+    <script src="js/htmx.min.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="col" style="width: 65%;">
+        <div>
+            <input type="text" name="search" id="search" hx-trigger="click, keydown[enterKey] from:body" hx-get="/medicines" hx-target="#medicines" hx-swap="innerHTML>
+
+        </div>
+
+        <div id="medicines" style="display: flex; flex-wrap: wrap; font-family: 'Segoe UI'; overflow-y: auto; height: 93vh; align-content: flex-start;"><div>
+    </div>
+    <div class="col" style="width: 34%;">
+        <div style="text-align: center;">
+            <h3>Order</h3>
+            <input type="hidden" name="oid" value="1XY2CEPN5QT">
+            <table style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Sno</th>
+                        <th>Name</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="order" class="">
+                    <tr>
+                        <td>1</td>
+                        <td>AMODIP 10MG TAB</td>
+                        <td><input type="number" name="qty" size="1" value="1" style="width: 40px;">
+                        </td>
+                        <td>538</td>
+                        <td id="price-438">538</td>
+                    </tr>
+
+                    <tr></tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>538</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <a href="#">Check Out</a>
+        </div>
+    </div>
+</body>
+</html>

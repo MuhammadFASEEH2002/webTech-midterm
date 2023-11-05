@@ -5,11 +5,32 @@ const db = require("../models");
 
 router.post("/medicines", async (req, res) => {
     const medicines = await db.Medicine.find({
-        Category: { $regex: req.body.search, $options: "i" },
-        Name: { $regex: req.body.search, $options: "i" },
-    }).limit(10)
+        Category: { $regex: req.body.search, $options: "i" }
+    }).limit(100)
     res.status(200).json(medicines);
 });
+
+
+router.get('/addtoCart/:rowId', async (req, res) => {
+    const Available = await db.Order.findOne({ RowId: req.params.rowId });
+    if (!Available) {
+        await db.Order.create({
+            RowId: req.params.rowId,
+            qty: 1
+        })
+    }
+    const orders = await db.Order.aggregate([
+        {
+            $lookup: {
+                from: 'medicines',
+                localField: 'RowId',
+                foreignField: 'RowId',
+                as: 'order'
+            }
+        }
+    ]);
+    res.status(200).json(orders)
+})
 // router.get("/students/:regno", async (req, res) => {
 //     const student = await db.Student.findOne({ regno: req.params.regno });
 //     res.status(200).json(student);

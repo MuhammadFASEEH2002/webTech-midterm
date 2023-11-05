@@ -1,7 +1,9 @@
- <div>
     @model.medicines.forEach(function(medicine){
+ <div>
                 <div class="item-title">
-                    <a href="#" style="text-decoration: none; color: #2267fc;">
+                    <a href="#" style="text-decoration: none; color: #2267fc;"  hx-target="#order"
+            hx-post="/addToCart"
+            hx-trigger="click"  id="@medicine.RowId">
                         @medicine.Name</a>
                 </div>
                 <div style="position: relative; font-size: 15px; height: 60px;">
@@ -26,5 +28,5 @@
                      @medicine.Stock
                     </div>
                 </div>
-    })
             </div>
+    })
