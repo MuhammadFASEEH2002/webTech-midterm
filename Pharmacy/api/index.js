@@ -23,12 +23,14 @@ router.get('/cart', async (req, res) => {
     res.status(200).json(orders)
 })
 router.get('/add/cart/:ProductID', async (req, res) => {
+    const Stock = await db.Medicine.findOne({ RowId: req.params.ProductID });
     const isExist = await db.Order.findOne({ RowId: req.params.ProductID });
-    if (!isExist) {
+    if (!isExist && Stock._doc.Stock>0)  {
         await db.Order.create({
             RowId: req.params.ProductID,
             qty: 1
         })
+        
     }
     const orders = await db.Order.aggregate([
         {
