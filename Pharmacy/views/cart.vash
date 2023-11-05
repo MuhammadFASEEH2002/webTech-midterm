@@ -1,0 +1,38 @@
+@{
+var index = 1;    
+var total = 0;
+model.orders.forEach(function(myorder){
+    @{ total = total +  (myorder.order[0].Price * myorder.qty)  }
+    @{ orderTotal  =  (myorder.order[0].Price * myorder.qty) }
+    
+    <tr>
+        <td>@index</td>
+        <td>@myorder.order[0].Name</td>
+        <td><input 
+            type="number" 
+            name="qty" 
+            size="1" 
+            value="@myorder.qty" 
+            style="width: 40px;"
+            hx-vals='{ "RowId" :  @myorder.RowId }'
+            hx-target="#order"
+            hx-post="/update/cart"
+            hx-trigger="change"
+            >
+        </td>
+        <td>@myorder.order[0].Price</td>
+        <td >@orderTotal</td>
+    </tr>
+
+    @{index += 1 }
+})
+}
+
+
+<tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>@(total)</td>
+</tr>

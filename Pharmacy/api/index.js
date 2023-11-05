@@ -9,13 +9,25 @@ router.post("/medicines", async (req, res) => {
     }).limit(100)
     res.status(200).json(medicines);
 });
+router.get('/cart', async (req, res) => {
+    const orders = await db.Order.aggregate([
+        {
+            $lookup: {
+                from: 'medicines',
+                localField: 'RowId',
+                foreignField: 'RowId',
+                as: 'order'
+            }
+        }
+    ]);
+    res.status(200).json(orders)
+})
 
-
-router.get('/addtoCart/:rowId', async (req, res) => {
-    const Available = await db.Order.findOne({ RowId: req.params.rowId });
+router.get('/addintocart/:ProductID', async (req, res) => {
+    const Available = await db.Order.findOne({ RowId: req.params.ProductID });
     if (!Available) {
         await db.Order.create({
-            RowId: req.params.rowId,
+            RowId: req.params.ProductID,
             qty: 1
         })
     }
@@ -25,7 +37,7 @@ router.get('/addtoCart/:rowId', async (req, res) => {
                 from: 'medicines',
                 localField: 'RowId',
                 foreignField: 'RowId',
-                as: 'order'
+                as: 'cart'
             }
         }
     ]);
