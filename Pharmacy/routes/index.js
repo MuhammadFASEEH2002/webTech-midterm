@@ -4,8 +4,11 @@ const ctrl = require("../controllers");
 router.get("/", ctrl.Medicine.getPage);
 router.post("/medicines", ctrl.Medicine.getMedicines)
 router.get("/cart", ctrl.Cart.showCart);
+router.get("/add/cart", ctrl.Cart.addToCart);
+router.post("/update/cart", ctrl.Cart.updateCart);
 
-router.get("/addintocart", ctrl.Cart.addToCart);
+// router.get("/addintocart", ctrl.Cart.updateCart);
+
 
 // router.get("/", async (req, res) => {
 //     const medicines = await db.Medicine.find({})

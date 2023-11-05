@@ -6,7 +6,7 @@ const db = require("../models");
 router.post("/medicines", async (req, res) => {
     const medicines = await db.Medicine.find({
         Category: { $regex: req.body.search, $options: "i" }
-    }).limit(100)
+    }).limit(50)
     res.status(200).json(medicines);
 });
 router.get('/cart', async (req, res) => {
@@ -22,10 +22,9 @@ router.get('/cart', async (req, res) => {
     ]);
     res.status(200).json(orders)
 })
-
-router.get('/addintocart/:ProductID', async (req, res) => {
-    const Available = await db.Order.findOne({ RowId: req.params.ProductID });
-    if (!Available) {
+router.get('/add/cart/:ProductID', async (req, res) => {
+    const isExist = await db.Order.findOne({ RowId: req.params.ProductID });
+    if (!isExist) {
         await db.Order.create({
             RowId: req.params.ProductID,
             qty: 1
@@ -37,7 +36,25 @@ router.get('/addintocart/:ProductID', async (req, res) => {
                 from: 'medicines',
                 localField: 'RowId',
                 foreignField: 'RowId',
-                as: 'cart'
+                as: 'order'
+            }
+        }
+    ]);
+    res.status(200).json(orders)
+})
+router.post('/update/cart', async (req, res) => {
+    const update = await db.Order.updateOne({ RowId: req.body.RowId }, {
+        $set: {
+            qty: Number(req.body.qty)
+        }
+    })
+    const orders = await db.Order.aggregate([
+        {
+            $lookup: {
+                from: 'medicines',
+                localField: 'RowId',
+                foreignField: 'RowId',
+                as: 'order'
             }
         }
     ]);

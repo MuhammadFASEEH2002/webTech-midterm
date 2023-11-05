@@ -2,10 +2,10 @@
  <div>
                 <div class="item-title">
                     <a href="#" style="text-decoration: none; color: #2267fc;"  
-            hx-post="/addTocart"
-            hx-trigger="click"  
-               hx-target="#order"
-              hx-vals='{ "ProductID" : @medicine.RowId }'
+              hx-get="/add/cart"
+                hx-vals='{ "ProductID" : @medicine.RowId }'
+                hx-trigger="click"
+                hx-target="#order"
             >
                         @medicine.Name</a>
                 </div>
